@@ -1,0 +1,137 @@
+:root {
+    --verde-oscuro: #1b4332;
+    --verde-claro: #2d6a4f;
+    --menta: #d8f3dc;
+    --blanco: #ffffff;
+    --gris-suave: #f8f9fa;
+    --texto: #2d3436;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+    font-family: 'Poppins', sans-serif; 
+    color: var(--texto); 
+    background-color: var(--gris-suave); 
+    line-height: 1.6; 
+}
+
+/* Navegación */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: var(--blanco);
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0; z-index: 1000;
+}
+
+.logo { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 1.8rem; 
+    color: var(--verde-oscuro); 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+}
+
+.cart-btn {
+    background: var(--menta);
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.cart-btn:hover { background: var(--verde-claro); color: white; }
+
+#cart-count { 
+    position: absolute; top: -5px; right: -5px; 
+    background: #ff7675; color: white; 
+    padding: 2px 7px; border-radius: 50%; font-size: 0.8rem; 
+}
+
+/* Hero */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('https://wallpapers.com/images/hd/plant-background-mh4y9mexexlv960o.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; }
+
+/* Grid de Catálogo */
+.container { padding: 60px 8%; }
+.section-title { text-align: center; margin-bottom: 50px; }
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Cards de Plantas */
+.card {
+    background: var(--blanco);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.card:hover { transform: translateY(-10px); }
+
+.card img { width: 100%; height: 320px; object-fit: cover; }
+
+.card-body { padding: 20px; }
+.card-category { font-size: 0.75rem; color: var(--verde-claro); font-weight: 600; }
+.card-title { font-size: 1.3rem; margin: 5px 0; }
+.card-desc { font-size: 0.85rem; color: #636e72; margin-bottom: 15px; height: 45px; overflow: hidden; }
+
+.card-footer { display: flex; justify-content: space-between; align-items: center; }
+.price { font-size: 1.4rem; font-weight: 700; }
+
+.add-btn {
+    background: var(--verde-oscuro);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Modal Carrito */
+.cart-modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7); z-index: 2000;
+    align-items: center; justify-content: center;
+}
+
+.cart-content {
+    background: white; width: 90%; max-width: 450px;
+    border-radius: 20px; padding: 25px;
+}
+
+.cart-item {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid #eee;
+}
+
+.btn-buy {
+    width: 100%; background: var(--verde-claro);
+    color: white; padding: 15px; border: none;
+    border-radius: 10px; margin-top: 15px; cursor: pointer;
+}

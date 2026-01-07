@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selva Urbana | Tienda Botánica</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            Selva<span>Urbana</span>
+        </div>
+        <button class="cart-btn" onclick="toggleCart()">
+            <i class="fas fa-shopping-basket"></i> Mi Carrito
+            <span id="cart-count">0</span>
+        </button>
+    </nav>
+
+    <header class="hero">
+        <h1>Decora con Vida</h1>
+        <p>Plantas frescas seleccionadas para tu hogar.</p>
+    </header>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>Nuestro Catálogo</h2>
+            <p>Selección premium de temporada</p>
+        </div>
+
+        <div class="catalog-grid" id="catalog-grid"></div>
+    </main>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Tu Pedido</h3>
+                <i class="fas fa-times" onclick="toggleCart()" style="cursor:pointer"></i>
+            </div>
+            <div id="cart-items-list">
+                </div>
+            <div class="cart-footer-box">
+                <h4 class="total-display">
+                    Total: <span id="total-price">$0.00</span>
+                </h4>
+                <button class="btn-buy" onclick="checkout()">Pagar Ahora</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
