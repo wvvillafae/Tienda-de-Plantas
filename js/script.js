@@ -25,7 +25,7 @@ const productos = [
         imagen: "https://img.freepik.com/fotos-premium/planta-maceta-sobre-fondo-blanco_731930-138384.jpg"
     },
     {
-       id: 3,
+        id: 4,
         nombre: "Dracaena Compacta",
         categoria: "Interior / Follaje",
         precio: 45.00,
@@ -36,7 +36,6 @@ const productos = [
 
 let carrito = [];
 
-// Función para mostrar las plantas en el HTML
 function cargarCatalogo() {
     const grid = document.getElementById('catalog-grid');
     grid.innerHTML = productos.map(p => `
@@ -57,38 +56,67 @@ function cargarCatalogo() {
     `).join('');
 }
 
-// Lógica de agregar
+// Lógica de agregar con CANTIDAD
 function agregarAlCarrito(id) {
-    const producto = productos.find(p => p.id === id);
-    carrito.push(producto);
+    const existe = carrito.find(p => p.id === id);
+    if (existe) {
+        existe.cantidad++;
+    } else {
+        const productoOriginal = productos.find(p => p.id === id);
+        carrito.push({ ...productoOriginal, cantidad: 1 });
+    }
     actualizarInterfaz();
 }
 
-// Actualizar números y lista del carrito
-function actualizarInterfaz() {
-    document.getElementById('cart-count').innerText = carrito.length;
-    const lista = document.getElementById('cart-items-list');
-    let total = 0;
-
-    lista.innerHTML = carrito.map((item, index) => {
-        total += item.precio;
-        return `
-            <div class="cart-item">
-                <span>${item.nombre}</span>
-                <div>
-                    <strong>$${item.precio.toFixed(2)}</strong>
-                    <i class="fas fa-trash-alt" onclick="eliminar(${index})" style="color:#ff7675; margin-left:10px; cursor:pointer"></i>
-                </div>
-            </div>
-        `;
-    }).join('');
-
-    document.getElementById('total-price').innerText = `$${total.toFixed(2)}`;
+// Funciones para cambiar cantidad desde el carrito
+function cambiarCantidad(index, cambio) {
+    carrito[index].cantidad += cambio;
+    if (carrito[index].cantidad <= 0) {
+        carrito.splice(index, 1);
+    }
+    actualizarInterfaz();
 }
 
 function eliminar(index) {
     carrito.splice(index, 1);
     actualizarInterfaz();
+}
+
+// Actualizar interfaz con MINIATURAS y SELECTOR DE CANTIDAD
+function actualizarInterfaz() {
+    const totalItems = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+    document.getElementById('cart-count').innerText = totalItems;
+
+    const lista = document.getElementById('cart-items-list');
+    let totalPrecio = 0;
+
+    lista.innerHTML = carrito.map((item, index) => {
+        const subtotal = item.precio * item.cantidad;
+        totalPrecio += subtotal;
+        
+        return `
+            <div class="cart-item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${item.imagen}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.9rem;">${item.nombre}</div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
+                            <button onclick="cambiarCantidad(${index}, -1)" style="border: 1px solid #ddd; background: white; cursor: pointer; padding: 0 6px; border-radius: 4px;">-</button>
+                            <span style="font-size: 0.85rem; font-weight: bold;">x${item.cantidad}</span>
+                            <button onclick="cambiarCantidad(${index}, 1)" style="border: 1px solid #ddd; background: white; cursor: pointer; padding: 0 6px; border-radius: 4px;">+</button>
+                            <span style="font-size: 0.8rem; color: #888; margin-left: 5px;">($${item.precio.toFixed(2)} c/u)</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-weight: bold; margin-bottom: 5px;">$${subtotal.toFixed(2)}</div>
+                    <i class="fas fa-trash-alt" onclick="eliminar(${index})" style="color:#ff7675; cursor:pointer; font-size: 0.9rem;"></i>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    document.getElementById('total-price').innerText = `$${totalPrecio.toFixed(2)}`;
 }
 
 function toggleCart() {
@@ -104,5 +132,4 @@ function checkout() {
     toggleCart();
 }
 
-// Iniciar al cargar la página
 window.onload = cargarCatalogo;
